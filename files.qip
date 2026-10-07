@@ -1,0 +1,16 @@
+set_global_assignment -name QIP_FILE [join [list rtl/vpll. [regexp -inline {[0-9]+} $quartus(version)] .qip] {}]
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/clk_steps.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/pll_recfg.sv
+set_global_assignment -name VERILOG_FILE rtl/sdram.v
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/tester.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/err_locate.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/video_timing.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/text_render.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/ui_composer.sv
+set_global_assignment -name VERILOG_INCLUDE_FILE rtl/ui_conn.vh
+set_global_assignment -name VERILOG_INCLUDE_FILE rtl/ui_ports.vh
+set_global_assignment -name VERILOG_INCLUDE_FILE rtl/ui_src.vh
+set_global_assignment -name VERILOG_INCLUDE_FILE rtl/ui_defs.vh
+set_global_assignment -name VERILOG_INCLUDE_FILE rtl/ui_pal.vh
+set_global_assignment -name SDC_FILE memtestplus.sdc
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/memtestplus.sv
