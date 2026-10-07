@@ -3,7 +3,8 @@
 // The control writes a record for the clock under test whenever it has errors. This module reads the records again and again and works out
 //   ms_f10[l]   per data line, the clock where it first worked: the first tested clock after the last one where it was wrong (0: not yet)
 //   lim_*       the limit: the slowest clock that failed, and what was wrong at it
-//   wo_f10      "without it": the clock where the last line other than the limit's lines was wrong
+//   wo_f10      "without it": the first clock where every line other than the limit's lines is fine (the step after the last one where
+//               one of them was wrong; the first clock tested if none was)
 // st holds 2 bits per step: 0 not tested, 1 passed, 2 errors. A step with errors is only trusted for the lines that were clean when a
 // whole pass had finished (the record's pass bit). The clock under test counts as a step of its own once its first pass is done.
 
@@ -69,6 +70,7 @@ reg         acc_oth_ok;
 reg  [11:0] acc_oth_f10;
 reg         acc_first_ok;
 reg  [11:0] acc_first_f10;
+reg         after_oth;                 // the step just visited had errors on a line other than the limit's
 
 integer l;
 reg     bad, clean;
@@ -114,7 +116,7 @@ always @(posedge clk) begin
 			end
 		end
 
-		// pass B: the last clock where a line other than the limit's was wrong, and the first clock tested
+		// pass B: the clock after the last one where a line other than the limit's was wrong, and the first clock tested
 		S_B_ADDR: begin
 			ra    <= i;
 			state <= S_B_WAIT;
@@ -125,9 +127,14 @@ always @(posedge clk) begin
 				acc_first_ok  <= 1;
 				acc_first_f10 <= f10;
 			end
+			if (after_oth) begin
+				acc_oth_f10 <= f10;
+				after_oth   <= 0;
+			end
 			if (sti == 2'd2 && (q_dq & ~acc_lim_mask) != 16'd0) begin
 				acc_oth_ok  <= 1;
 				acc_oth_f10 <= f10;
+				after_oth   <= 1;
 			end
 			if (i == 6'd63) begin
 				i     <= 0;
@@ -159,6 +166,7 @@ always @(posedge clk) begin
 			acc_oth_f10   <= 0;
 			acc_first_ok  <= 0;
 			acc_first_f10 <= 0;
+			after_oth     <= 0;
 			state         <= S_A_ADDR;
 		end
 
@@ -167,7 +175,7 @@ end
 
 initial begin
 	acc_ms = 0; acc_lim_ok = 0; acc_lim_f10 = 0; acc_lim_mask = 0; acc_lim_rowg = 0;
-	acc_lim_fv = 0; acc_lim_fidx = 0; acc_oth_ok = 0; acc_oth_f10 = 0; acc_first_ok = 0; acc_first_f10 = 0;
+	acc_lim_fv = 0; acc_lim_fidx = 0; acc_oth_ok = 0; acc_oth_f10 = 0; acc_first_ok = 0; acc_first_f10 = 0; after_oth = 0;
 	ms_f10 = 0; lim_ok = 0; lim_f10 = 0; lim_mask = 0; lim_rowg = 0; lim_fv = 0; lim_fidx = 0; wo_f10 = 0;
 end
 
