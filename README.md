@@ -1,9 +1,6 @@
 # MemTest+ for MiSTer
 
-An SDRAM module test core for the [MiSTer](https://github.com/MiSTer-devel/Main_MiSTer) FPGA platform, with a screen that says what it
-is looking at. It is a new core, not a fork: the screen, the video timing, the test patterns, the error finding and the scan are new.
-The way the test writes and reads the memory, and the table of 64 SDRAM clocks (167 MHz down to 45 MHz), come from
-[MiSTer-devel/MemTest_MiSTer](https://github.com/MiSTer-devel/MemTest_MiSTer) by Sorgelig.
+An SDRAM module test core for the [MiSTer](https://github.com/MiSTer-devel/Main_MiSTer) FPGA platform.
 
 ![MemTest+ running an auto scan on a 128 MB module](screen.png)
 
