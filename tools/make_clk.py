@@ -32,7 +32,6 @@ def tenths(code):
 
 f10 = [tenths(r[0]) for r in rows]
 assert f10 == sorted(f10, reverse=True), 'the steps are not in falling order'
-assert all(v % 10 in (0, 5) for v in f10), 'the message of a test in progress (ui/layout.txt) has room for a .0 or .5 only'
 with open(OUT, 'w', newline='\n') as f:
     f.write('// made by tools/make_clk.py from the original MemTest core\'s table: the 64 clocks of the SDRAM test, 167 MHz down to 45 MHz.\n')
     f.write('// freq10 is the clock in tenths of a MHz; m, k and c are the PLL settings that make it (the PLL is reconfigured with them).\n')

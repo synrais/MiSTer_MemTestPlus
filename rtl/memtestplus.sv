@@ -621,8 +621,7 @@ wire [31:0] v_size    = {30'd0, sz};
 wire [31:0] v_chips   = {30'd0, (sz == 2'd3) ? chip : 2'd3};
 wire [31:0] v_pattern = {29'd0, pat_set};
 wire [31:0] v_video   = {30'd0, vcode};
-wire [31:0] v_f_i     = freq10 / 12'd10;
-wire [31:0] v_f_f     = freq10 % 12'd10;
+wire [31:0] v_clock   = freq10 / 12'd10;
 wire [31:0] v_mode    = {31'd0, ~auto};
 wire [31:0] v_stab    = {29'd0, stab};
 wire [31:0] v_th      = {25'd0, th};
@@ -633,17 +632,16 @@ wire [31:0] v_cs      = {26'd0, cs};
 wire [31:0] v_passes  = have ? s_pass : 32'd0;
 wire [31:0] v_errors  = have ? s_fail : 32'd0;
 wire [31:0] v_errtag  = {31'd0, have && (s_fail != 0)};
-wire [31:0] v_b_i     = best_ok ? best10 / 12'd10 : NONE;
-wire [31:0] v_b_f     = best_ok ? best10 % 12'd10 : NONE;
+wire [31:0] v_best    = best_ok ? best10 / 12'd10 : NONE;
 wire [31:0] v_result  = {29'd0, result};
 wire [31:0] v_rm      = testing_q ? {26'd0, rm} : NONE;
 wire [31:0] v_rs      = testing_q ? {26'd0, rs} : NONE;
 wire [31:0] v_msg     = {27'd0, msg_q};
 
-// the clock and time left in the message of a test in progress
-wire [31:0] v_ci = testing_q ? v_f_i : NONE;
-wire [31:0] v_ct = testing_q ? ((v_f_f == 32'd5) ? 32'd2 : 32'd1) : 32'd0;    // ".0 MHz clock", or ".5" (the only clock with a .5 is 62.5 MHz)
-wire [31:0] v_rc = {31'd0, testing_q};                 // ":" and " remaining" of the time left, after the clock
+// what follows the message while testing: the clock, " MHz clock", the time left and " remaining"
+wire [31:0] v_ci = testing_q ? v_clock : NONE;
+wire [31:0] v_ct = {31'd0, testing_q};
+wire [31:0] v_rc = {31'd0, testing_q};
 wire [31:0] v_rt = {31'd0, testing_q};
 
 wire [31:0] v_ms0  = ms_value(ms_f10[0*12 +: 12]);
@@ -664,10 +662,8 @@ wire [31:0] v_ms14 = ms_value(ms_f10[14*12 +: 12]);
 wire [31:0] v_ms15 = ms_value(ms_f10[15*12 +: 12]);
 
 wire [31:0] v_wl      = l_have ? {28'd0, lowest} : NONE;
-wire [31:0] v_wl_i    = l_have ? lim_f10 / 12'd10 : NONE;
-wire [31:0] v_wl_f    = l_have ? lim_f10 % 12'd10 : NONE;
-wire [31:0] v_wo_i    = l_have ? wo_f10 / 12'd10 : NONE;
-wire [31:0] v_wo_f    = l_have ? wo_f10 % 12'd10 : NONE;
+wire [31:0] v_fails   = l_have ? lim_f10 / 12'd10 : NONE;
+wire [31:0] v_without = l_have ? wo_f10 / 12'd10 : NONE;
 wire [31:0] v_wav     = {30'd0, !l_have ? 2'd0 : area_one ? 2'd1 : 2'd2};
 wire [31:0] v_e_chip  = e_have ? {30'd0, e_chip_no} : NONE;
 wire [31:0] v_e_bank  = e_have ? {30'd0, e_bank}    : NONE;

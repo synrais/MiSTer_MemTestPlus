@@ -9,9 +9,9 @@ and sim/ui_demo.vh and build/ui_preview_480.png, _240.png (the screen with the #
 Layout, 28 lines of 80 cells:
   <f=name> <b=name>   foreground / background colour for what follows (names in PALETTE)
   [[name:3d]]         a number of 3 digits, leading zeros blank       [[name:2z]]  leading zeros kept
-  [[name:3dc]]        the same, green from 130 and red below (a speed in MHz)    [[name:1df]]  coloured like the last c number
+  [[name:3dc]]        the same, green from 130 and red below (a speed in MHz)
   [[name:10dl]]       a number, left aligned
-  [[name:3db]]        a number that is not drawn at all when it is 4294967295 (c, f, l and b can be combined)
+  [[name:3db]]        a number that is not drawn at all when it is 4294967295 (c, l and b can be combined)
   [[name:S10]]        one of the words #str name index text[|colour] in a field of 10 cells
                       a word ending in ^ is padded with cells that are not drawn (not with blanks), so a field laid over it can show
   [[name:M64s4]]      a map of 64 cells, one every 4 cells (s4 is optional); the name starts adr or dq
@@ -40,7 +40,7 @@ PAL = {n: i for i, (n, _) in enumerate(PALETTE)}
 DEFAULT_FG, DEFAULT_BG = PAL['text'], PAL['navy']
 RULE = {'top': ('╔', '═', '╗'), 'mid': ('╠', '═', '╣'), 'thin': ('╟', '─', '╢'), 'bot': ('╚', '═', '╝')}
 KIND = {'d': 0, 'z': 1, 'S': 2, 'M': 3}
-NUMFLAG = {'c': 1, 'f': 2, 'l': 4, 'b': 8}
+NUMFLAG = {'c': 1, 'l': 2, 'b': 4}
 FOLLOW = -1                                  # the place of a field that starts after the last cell written (address 0xFFF)
 MAPKIND = {'adr': 1, 'dq': 2}
 
@@ -65,7 +65,7 @@ def tokens(ln):
             out.append(('fg' if m.group(1) == 'f' else 'bg', PAL[m.group(2)]))
             i += m.end()
             continue
-        m = re.match(r'\[\[([a-z0-9_]+):(\d+)([dz])([cflb]*)(?:@(\d+|>))?\]\]', ln[i:])
+        m = re.match(r'\[\[([a-z0-9_]+):(\d+)([dz])([clb]*)(?:@(\d+|>))?\]\]', ln[i:])
         if m:
             aux = sum(NUMFLAG[ch] for ch in set(m.group(4)))
             out.append(('field', dict(name=m.group(1), kind=m.group(3), width=int(m.group(2)), aux=aux, span=int(m.group(2)),
@@ -275,18 +275,18 @@ def preview(cells, fields, strings, demo, codes, font16, font8, h, path):
         r, c = cur if fd['at'] == FOLLOW else (fd['row'], fd['col'])
         if fd['kind'] in 'dz':
             n = int(v or 0)
-            if n == 0xFFFFFFFF and fd['aux'] & 8:
+            if n == 0xFFFFFFFF and fd['aux'] & 4:
                 continue
             s = ('%0*d' if fd['kind'] == 'z' else '%*d') % (fd['width'], n)
             if n == 0xFFFFFFFF:
                 s = '-' * fd['width']
-            elif fd['aux'] & 4:
+            elif fd['aux'] & 2:
                 s = s.strip().ljust(fd['width'])
             for i, ch in enumerate(s[-fd['width']:]):
                 cell[r][c + i][0] = ch
                 if fd['aux'] & 1 and n != 0xFFFFFFFF:
                     hot = n >= 130
-                if fd['aux'] & 3 and n != 0xFFFFFFFF:
+                if fd['aux'] & 1 and n != 0xFFFFFFFF:
                     cell[r][c + i][1] = PAL['green'] if hot else PAL['red']
             cur = (r, c + fd['width'])
         elif fd['kind'] == 'S':

@@ -1,8 +1,7 @@
 // Writes the fields of the screen that change (numbers, words, maps) into the character RAM of text_render, a cell at a time, going round
 // the list made by tools/make_ui.py (rtl/ui_ops.hex). An operation is one 40 bit word: kind[39:36] source[35:30] address[29:18] width[17:11] aux[10:0].
 //   number  (kind 0: leading zeros blank, kind 1: kept)  decimal digits; 32'hFFFFFFFF shows dashes; aux[0]: green from 130 and red below,
-//                       aux[1]: the colour of the last number that had aux[0] (the decimal of a speed), aux[2]: left aligned,
-//                       aux[3]: nothing is written when the number is 32'hFFFFFFFF
+//                       aux[1]: left aligned, aux[2]: nothing is written when the number is 32'hFFFFFFFF
 //   string  (kind 2)  one of the words of the field, in its own colour; a character 8'h00 is not written (the cell keeps what is there)
 //   an address of 12'hFFF in the operation means: start at the cell after the last one written (a field that follows a word of unknown length)
 //   map     (kind 3)  a row of cells, 2 bits each; aux[10:8] is the kind (1 address map, 2 data lines), aux[7:0] the distance between cells
@@ -88,7 +87,7 @@ function [3:0] lead(input [39:0] b, input [6:0] w);
 endfunction
 
 wire [10:0] sidx = aux + value[10:0] * width + i;     // the character of the word in the string table
-wire        skip = (kind == 4'd2) ? (schar_q == 8'h00) : (kind[3:1] == 0 && aux[3] && none);     // this cell is left as it is
+wire        skip = (kind == 4'd2) ? (schar_q == 8'h00) : (kind[3:1] == 0 && aux[2] && none);     // this cell is left as it is
 
 always @(posedge clk) begin
 	we       <= 0;
@@ -141,16 +140,16 @@ always @(posedge clk) begin
 					begin : digit
 						reg [6:0] k;
 						reg [3:0] d;
-						k = i + (aux[2] ? lz : 4'd0);
+						k = i + (aux[1] ? lz : 4'd0);
 						d = bcd[(width - 1 - k) * 4 +: 4];
 						if (none) wchar <= "-";
 						else if (k >= width) wchar <= 8'h20;
 						else begin
-							wchar <= ((kind == 4'd0) && !aux[2] && !seen && d == 0 && i != width - 1) ? 8'h20 : (8'h30 + d);
+							wchar <= ((kind == 4'd0) && !aux[1] && !seen && d == 0 && i != width - 1) ? 8'h20 : (8'h30 + d);
 							if (d != 0) seen <= 1;
 						end
 					end
-					wattr <= (aux[1:0] != 0 && !none) ? {stattr_q[7:4], hot ? UI_C_GREEN : UI_C_RED} : stattr_q;
+					wattr <= (aux[0] && !none) ? {stattr_q[7:4], hot ? UI_C_GREEN : UI_C_RED} : stattr_q;
 				end
 				4'd2: begin
 					wchar <= schar_q;

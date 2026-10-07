@@ -66,7 +66,7 @@ task screen;
 	end
 endtask
 
-// the message line must end where it should: blank after its text up to the cell before the right edge, and the edge itself as on the other lines
+// the message line ends clean: blank up to the right edge, and the edge as on the other lines
 task check_edge;
 	integer c;
 	reg     bad;
@@ -164,7 +164,7 @@ initial begin
 	press(8'h6B); #2000; $display("   key left: chip=%0d v_chips=%0d (menu bits %0d)", dut.chip, dut.v_chips, dut.hps_io.status[12:11]);
 	dut.hps_io.status[12:11] = 2'd0;
 
-	$display("scenario 8: a weak line: DQ5 is wrong down to 148 MHz, DQ9 and DQ0 only down to 150 MHz, from 149 MHz on only DQ5 -> expect limit DQ5, without it 150.0 (the last other line wrong)");
+	$display("scenario 8: a weak line: DQ5 is wrong down to 148 MHz, DQ9 and DQ0 only down to 150 MHz, from 149 MHz on only DQ5 -> expect limit DQ5, without it 149.0 (the clock after the last one where another line was wrong, 150)");
 	dut.hps_io.status[4:2] = 3'd0;
 	fault_mode = 1;
 	dut.hps_io.joystick_0 = 32'h10; #2000; dut.hps_io.joystick_0 = 0; #2000;

@@ -5,22 +5,22 @@
 ║<b=title><f=cyan> MemTest+<f=text> SDRAM module test for MiSTer
 @rule mid
 ║ <f=dim>RAM MODULE  <f=cyan>[[size:S8]]                  <f=dim>CHIPS   <f=cyan>[[chips:S11]]
-║ <f=dim>CLOCK FREQ  <f=text>[[f_i:3dc]].[[f_f:1df]]<f=dim> MHz                 <f=dim>PATTERN <f=cyan>[[pattern:S12]]
+║ <f=dim>CLOCK FREQ  <f=text>[[clock:3dc]]<f=dim> MHz                   <f=dim>PATTERN <f=cyan>[[pattern:S12]]
 ║ <f=dim>SCAN MODE   <f=cyan>[[mode:S12]]              <f=dim>VIDEO   <f=cyan>[[video:S9]]
 ║ <f=dim>UP-TIME     <f=text>[[th:2z]]:[[tm:2z]]:[[ts:2z]]                  <f=dim>PASSES  <f=text>[[passes:10dl]]
 ║ <f=dim>STABLE FOR  <f=text>[[cm:2z]]:[[cs:2z]]                     <f=dim>ERRORS  <f=text>[[errors:10dl]] [[errtag:S6]]
-║ <f=dim>TEST LENGTH <f=cyan>[[stab:S6]]  [[result:S9]] <f=text>[[rm:2z]]:[[rs:2z]]   <f=dim>BEST STABLE CLOCK <f=text>[[b_i:3dc]].[[b_f:1df]]<f=dim> MHz
+║ <f=dim>TEST LENGTH <f=cyan>[[stab:S6]]  [[result:S9]] <f=text>[[rm:2z]]:[[rs:2z]]   <f=dim>BEST STABLE CLOCK <f=text>[[best:3dc]]<f=dim> MHz
 @rule thin
 ║ <f=cyan>MAX LINE SPEED
 ║<f=dim> line   0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15
 ║        [[dqmap:M16s4]]
 ║<f=dim> MHz    <f=text>[[ms0:3dc]] [[ms1:3dc]] [[ms2:3dc]] [[ms3:3dc]] [[ms4:3dc]] [[ms5:3dc]] [[ms6:3dc]] [[ms7:3dc]] [[ms8:3dc]] [[ms9:3dc]] [[ms10:3dc]] [[ms11:3dc]] [[ms12:3dc]] [[ms13:3dc]] [[ms14:3dc]] [[ms15:3dc]]
 ║
-║ <f=cyan>WEAK LINE   <f=text>[[wl:2dl]]      <f=cyan>FAILS  <f=text>[[wl_i:3dc]].[[wl_f:1df]]<f=dim> MHz  <f=cyan>ELSE <f=text>[[wo_i:3dc]].[[wo_f:1df]]<f=dim> MHz
+║ <f=cyan>WEAK LINE   <f=text>[[wl:2dl]]      <f=cyan>FAILS   <f=text>[[fails:3dc]]<f=dim> MHz   <f=cyan>ELSE <f=text>[[without:3dc]]<f=dim> MHz
 ║ <f=cyan>FIRST ERROR <f=text>chip [[e_chip:1d]]  bank [[e_bank:1d]]  row [[e_row:4z]]  col [[e_col:4z]]   <f=amber>[[wav:S10]]
 ║       [[adrmap:M64]]
 @rule thin
-║ <f=text>[[msg:S58]][[ci:3db@>]][[ct:S14@>]][[rm:2zb@>]][[rc:S1@>]][[rs:2zb@>]][[rt:S25@>]]
+║ <f=text>[[msg:S58]][[ci:3db@>]][[ct:S12@>]][[rm:2zb@>]][[rc:S1@>]][[rs:2zb@>]][[rt:S25@>]]
 @rule thin
 ║ <f=text>B/ENTER <f=dim>auto scan  <f=text>UP/DOWN <f=dim>manual clock  <f=text>LEFT/RIGHT <f=dim>chip
 @rule bot
@@ -75,8 +75,7 @@
 #str msg 15 Manual, 30 MIN TEST at ^
 #str msg 16 Manual, 60 MIN TEST at ^
 #str ct 0 ^
-#str ct 1 .0 MHz clock
-#str ct 2 .5 MHz clock
+#str ct 1  MHz clock
 #str rc 0 ^
 #str rc 1 :
 #str rt 0 ^
@@ -89,8 +88,7 @@
 #demo chips 0
 #demo pattern 0
 #demo video 1
-#demo f_i 145
-#demo f_f 0
+#demo clock 145
 #demo mode 0
 #demo stab 3
 #demo th 0
@@ -107,8 +105,7 @@
 #demo e_bank 1
 #demo e_row 3141
 #demo e_col 52
-#demo b_i 4294967295
-#demo b_f 4294967295
+#demo best 4294967295
 #demo result 0
 #demo msg 8
 #demo ci 145
@@ -130,10 +127,8 @@
 #demo ms1 148
 #demo ms0 150
 #demo wl 5
-#demo wl_i 146
-#demo wl_f 0
-#demo wo_i 148
-#demo wo_f 0
+#demo fails 146
+#demo without 148
 #demo wav 1
 #demo rm 8
 #demo rc 1
