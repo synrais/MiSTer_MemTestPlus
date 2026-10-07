@@ -1,0 +1,141 @@
+// MemTest+ screen: 80 x 28 cells. See tools/make_ui.py for the markup. Edit this, run tools/make_ui.py, look at build/ui_preview_480.png.
+
+
+@rule top
+║<b=title><f=cyan> MemTest+<f=text> SDRAM module test for MiSTer
+@rule mid
+║ <f=dim>RAM MODULE  <f=cyan>[[size:S8]]                  <f=dim>CHIPS   <f=cyan>[[chips:S11]]
+║ <f=dim>CLOCK FREQ  <f=text>[[f_i:3dc]].[[f_f:1df]]<f=dim> MHz                 <f=dim>PATTERN <f=cyan>[[pattern:S12]]
+║ <f=dim>SCAN MODE   <f=cyan>[[mode:S12]]              <f=dim>VIDEO   <f=cyan>[[video:S9]]
+║ <f=dim>UP-TIME     <f=text>[[th:2z]]:[[tm:2z]]:[[ts:2z]]                  <f=dim>PASSES  <f=text>[[passes:10dl]]
+║ <f=dim>STABLE FOR  <f=text>[[cm:2z]]:[[cs:2z]]                     <f=dim>ERRORS  <f=text>[[errors:10dl]] [[errtag:S6]]
+║ <f=dim>TEST LENGTH <f=cyan>[[stab:S6]]  [[result:S9]] <f=text>[[rm:2z]]:[[rs:2z]]   <f=dim>BEST STABLE CLOCK <f=text>[[b_i:3dc]].[[b_f:1df]]<f=dim> MHz
+@rule thin
+║ <f=cyan>MAX LINE SPEED
+║<f=dim> line   0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15
+║        [[dqmap:M16s4]]
+║<f=dim> MHz    <f=text>[[ms0:3dc]] [[ms1:3dc]] [[ms2:3dc]] [[ms3:3dc]] [[ms4:3dc]] [[ms5:3dc]] [[ms6:3dc]] [[ms7:3dc]] [[ms8:3dc]] [[ms9:3dc]] [[ms10:3dc]] [[ms11:3dc]] [[ms12:3dc]] [[ms13:3dc]] [[ms14:3dc]] [[ms15:3dc]]
+║
+║ <f=cyan>WEAK LINE   <f=text>[[wl:2dl]]      <f=cyan>FAILS  <f=text>[[wl_i:3dc]].[[wl_f:1df]]<f=dim> MHz  <f=cyan>ELSE <f=text>[[wo_i:3dc]].[[wo_f:1df]]<f=dim> MHz
+║ <f=cyan>FIRST ERROR <f=text>chip [[e_chip:1d]]  bank [[e_bank:1d]]  row [[e_row:4z]]  col [[e_col:4z]]   <f=amber>[[wav:S10]]
+║       [[adrmap:M64]]
+@rule thin
+║ <f=text>[[msg:S58]][[ci:3db@>]][[ct:S14@>]][[rm:2zb@>]][[rc:S1@>]][[rs:2zb@>]][[rt:S25@>]]
+@rule thin
+║ <f=text>B/ENTER <f=dim>auto scan  <f=text>UP/DOWN <f=dim>manual clock  <f=text>LEFT/RIGHT <f=dim>chip
+@rule bot
+
+#str size 0 NONE|red
+#str size 1 32 MB
+#str size 2 64 MB
+#str size 3 128 MB
+#str chips 0 BOTH
+#str chips 1 CHIP 1 ONLY
+#str chips 2 CHIP 2 ONLY
+#str chips 3 -
+#str pattern 0 RANDOM
+#str pattern 1 WALKING 1/0
+#str pattern 2 ADDRESS
+#str pattern 3 CHECKERBOARD
+#str pattern 4 ALL IN TURN
+#str video 0 NTSC 240p
+#str video 1 NTSC 480p
+#str video 2 PAL 288p
+#str video 3 PAL 576p
+#str mode 0 AUTO SCAN
+#str mode 1 MANUAL|amber
+#str stab 0 1 MIN
+#str stab 1 2 MIN
+#str stab 2 5 MIN
+#str stab 3 10 MIN
+#str stab 4 30 MIN
+#str stab 5 60 MIN
+#str errtag 0
+#str errtag 1 FAILED|red
+#str result 0 TESTING|amber
+#str result 1 PASS|green
+#str result 2 SLOW|amber
+#str result 3 FAIL|red
+#str result 4 NO MODULE|red
+#str msg 0 No errors at a good clock for the whole time. Board OK.
+#str msg 1 Stable, but only below 130 MHz: slow or marginal board.
+#str msg 2 Errors at every clock. Check the board and its solder.
+#str msg 3 No SDRAM board found. Power off, fit it, try again.
+#str msg 4 Errors at this clock. Try a lower one, or press B to scan.
+#str msg 5 Auto, 1 MIN TEST at ^
+#str msg 6 Auto, 2 MIN TEST at ^
+#str msg 7 Auto, 5 MIN TEST at ^
+#str msg 8 Auto, 10 MIN TEST at ^
+#str msg 9 Auto, 30 MIN TEST at ^
+#str msg 10 Auto, 60 MIN TEST at ^
+#str msg 11 Manual, 1 MIN TEST at ^
+#str msg 12 Manual, 2 MIN TEST at ^
+#str msg 13 Manual, 5 MIN TEST at ^
+#str msg 14 Manual, 10 MIN TEST at ^
+#str msg 15 Manual, 30 MIN TEST at ^
+#str msg 16 Manual, 60 MIN TEST at ^
+#str ct 0 ^
+#str ct 1 .0 MHz clock
+#str ct 2 .5 MHz clock
+#str rc 0 ^
+#str rc 1 :
+#str rt 0 ^
+#str rt 1  remaining
+#str wav 0 -
+#str wav 1 one area
+#str wav 2 spread out
+
+#demo size 3
+#demo chips 0
+#demo pattern 0
+#demo video 1
+#demo f_i 145
+#demo f_f 0
+#demo mode 0
+#demo stab 3
+#demo th 0
+#demo tm 2
+#demo ts 5
+#demo cm 1
+#demo cs 39
+#demo passes 50
+#demo errors 0
+#demo errtag 0
+#demo adrmap 1111111111111111111111111111111111111111111111111111111111111111
+#demo dqmap 0000020000000000
+#demo e_chip 2
+#demo e_bank 1
+#demo e_row 3141
+#demo e_col 52
+#demo b_i 4294967295
+#demo b_f 4294967295
+#demo result 0
+#demo msg 8
+#demo ci 145
+#demo ct 1
+#demo ms15 144
+#demo ms14 147
+#demo ms13 148
+#demo ms12 148
+#demo ms11 146
+#demo ms10 150
+#demo ms9 148
+#demo ms8 148
+#demo ms7 125
+#demo ms6 150
+#demo ms5 4294967295
+#demo ms4 150
+#demo ms3 128
+#demo ms2 150
+#demo ms1 148
+#demo ms0 150
+#demo wl 5
+#demo wl_i 146
+#demo wl_f 0
+#demo wo_i 148
+#demo wo_f 0
+#demo wav 1
+#demo rm 8
+#demo rc 1
+#demo rt 1
+#demo rs 21
