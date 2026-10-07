@@ -26,8 +26,8 @@ run error-free at one clock for the whole *test length* (10 minutes by default).
   pattern, the video mode, the passes and the errors, and the best stable clock found.
 - **Max line speed**: for each of the 16 data lines, the clock where it first worked. The square is red until the line works; the
   number is green from 130 MHz and red below.
-- **Weak line**: the data line still wrong at the slowest failing clock (**FAILS**, the clock it fails at), and the clock the module
-  would reach without it (**ELSE**).
+- **Weak line**: the data line still wrong at the slowest failing clock (**FAILS**, the clock it fails at), and the first clock where
+  every other line is fine (**ELSE**: the clock the module would reach without the weak line).
 - **First error**: chip, bank, row and column of the first error, and whether the errors are in one area or spread out.
 - **Address map**: the module in 64 parts: grey not yet tested in this pass, green tested without errors, red with errors.
 - **Message line**: the clock and the time left while testing, and the explanation of the result when it ends.
