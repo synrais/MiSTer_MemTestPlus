@@ -1,0 +1,62 @@
+// made by tools/make_ui.py: which signal each field reads
+localparam UI_OPS = 56;
+always @* begin
+	ui_val = 128'd0;
+	case (ui_src)
+		0: ui_val = {96'd0, v_size};
+		1: ui_val = {96'd0, v_chips};
+		2: ui_val = {96'd0, v_f_i};
+		3: ui_val = {96'd0, v_f_f};
+		4: ui_val = {96'd0, v_pattern};
+		5: ui_val = {96'd0, v_mode};
+		6: ui_val = {96'd0, v_video};
+		7: ui_val = {96'd0, v_th};
+		8: ui_val = {96'd0, v_tm};
+		9: ui_val = {96'd0, v_ts};
+		10: ui_val = {96'd0, v_passes};
+		11: ui_val = {96'd0, v_cm};
+		12: ui_val = {96'd0, v_cs};
+		13: ui_val = {96'd0, v_errors};
+		14: ui_val = {96'd0, v_errtag};
+		15: ui_val = {96'd0, v_stab};
+		16: ui_val = {96'd0, v_result};
+		17: ui_val = {96'd0, v_rm};
+		18: ui_val = {96'd0, v_rs};
+		19: ui_val = {96'd0, v_b_i};
+		20: ui_val = {96'd0, v_b_f};
+		21: ui_val = v_dqmap;
+		22: ui_val = {96'd0, v_ms0};
+		23: ui_val = {96'd0, v_ms1};
+		24: ui_val = {96'd0, v_ms2};
+		25: ui_val = {96'd0, v_ms3};
+		26: ui_val = {96'd0, v_ms4};
+		27: ui_val = {96'd0, v_ms5};
+		28: ui_val = {96'd0, v_ms6};
+		29: ui_val = {96'd0, v_ms7};
+		30: ui_val = {96'd0, v_ms8};
+		31: ui_val = {96'd0, v_ms9};
+		32: ui_val = {96'd0, v_ms10};
+		33: ui_val = {96'd0, v_ms11};
+		34: ui_val = {96'd0, v_ms12};
+		35: ui_val = {96'd0, v_ms13};
+		36: ui_val = {96'd0, v_ms14};
+		37: ui_val = {96'd0, v_ms15};
+		38: ui_val = {96'd0, v_wl};
+		39: ui_val = {96'd0, v_wl_i};
+		40: ui_val = {96'd0, v_wl_f};
+		41: ui_val = {96'd0, v_wo_i};
+		42: ui_val = {96'd0, v_wo_f};
+		43: ui_val = {96'd0, v_e_chip};
+		44: ui_val = {96'd0, v_e_bank};
+		45: ui_val = {96'd0, v_e_row};
+		46: ui_val = {96'd0, v_e_col};
+		47: ui_val = {96'd0, v_wav};
+		48: ui_val = v_adrmap;
+		49: ui_val = {96'd0, v_msg};
+		50: ui_val = {96'd0, v_ci};
+		51: ui_val = {96'd0, v_ct};
+		52: ui_val = {96'd0, v_rc};
+		53: ui_val = {96'd0, v_rt};
+		default: ui_val = 128'd0;
+	endcase
+end
