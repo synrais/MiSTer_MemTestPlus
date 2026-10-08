@@ -17,7 +17,7 @@
 ║<f=dim> MHz    <f=text>[[ms0:3dc]] [[ms1:3dc]] [[ms2:3dc]] [[ms3:3dc]] [[ms4:3dc]] [[ms5:3dc]] [[ms6:3dc]] [[ms7:3dc]] [[ms8:3dc]] [[ms9:3dc]] [[ms10:3dc]] [[ms11:3dc]] [[ms12:3dc]] [[ms13:3dc]] [[ms14:3dc]] [[ms15:3dc]]
 ║
 ║ <f=cyan>WEAK LINE   <f=text>[[wl:2dl]]      <f=cyan>FAILS   <f=text>[[fails:3dc]]<f=dim> MHz   <f=cyan>ELSE <f=text>[[without:3dc]]<f=dim> MHz
-║ <f=cyan>FIRST ERROR <f=text>chip [[e_chip:1d]]  bank [[e_bank:1d]]  row [[e_row:4z]]  col [[e_col:4z]]   <f=amber>[[wav:S10]]
+║ <f=cyan>FIRST ERROR <f=text>chip [[e_chip:1d]]  bank [[e_bank:1d]]  row [[e_row:4z]]  column [[e_col:4z]]   <f=amber>[[wav:S10]]
 ║       [[adrmap:M64]]
 @rule thin
 ║ <f=text>[[msg:S58]][[ci:3db@>]][[ct:S12@>]][[rm:2zb@>]][[rc:S1@>]][[rs:2zb@>]][[rt:S25@>]]
